@@ -6,8 +6,12 @@ class ListCategoriesController {
   constructor(private listCategoriesUseCase: ListCategoriesUseCase) {}
 
   public handle(request: Request, response: Response): Response {
-    const categories = this.listCategoriesUseCase.execute();
-    return response.status(200).json(categories);
+    try {
+      const categories = this.listCategoriesUseCase.execute();
+      return response.status(200).json(categories);
+    } catch (error) {
+      return response.status(400).json({ error: error.message });
+    }
   }
 }
 
